@@ -1,6 +1,105 @@
+/* This CSS code styles a dropdown component and a booking form. */
+
 .dropdown {
-    max-height: 200px;
-    /* Adjust the max height as needed */
-    overflow-y: auto;
-    /* Enable vertical scrolling */
+  max-height: 200px;
+  /* Adjusts the maximum height of the dropdown as needed */
+  overflow-y: auto;
+  /* Enables vertical scrolling in the dropdown */
+}
+
+.book {
+  margin: 20px auto;
+  /* Centers the booking form with a margin */
+  max-width: 600px;
+  /* Limits the maximum width of the booking form */
+  padding: 20px;
+  /* Adds padding inside the booking form */
+  background-color: #f9f9f9;
+  /* Sets the background color of the booking form */
+  border-radius: 10px;
+  /* Rounds the corners of the booking form */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* Adds a subtle shadow around the form */
+}
+
+.book form {
+  display: flex;
+  /* Sets the form layout as flexible */
+  flex-direction: column;
+  /* Arranges form elements in a column */
+}
+
+.book label {
+  margin-bottom: 5px;
+  /* Adds margin below labels */
+  font-weight: bold;
+  /* Makes labels bold */
+}
+
+.book input[type="text"],
+.book input[type="number"],
+.book input[type="date"],
+.book input[type="time"],
+.book select {
+  padding: 8px;
+  /* Adds padding to inputs and select elements */
+  margin-bottom: 10px;
+  /* Adds margin below inputs and select elements */
+  border: 1px solid #ccc;
+  /* Sets a light border around inputs and select elements */
+  border-radius: 5px;
+  /* Rounds the corners of inputs and select elements */
+}
+
+.book input[type="text"]:focus,
+.book input[type="number"]:focus,
+.book input[type="date"]:focus,
+.book input[type="time"]:focus,
+.book select:focus {
+  outline: none;
+  /* Removes the default outline when focused */
+  border-color: #007bff;
+  /* Changes the border color when focused */
+}
+
+.book .error {
+  color: #dc3545;
+  /* Sets the color for error messages */
+  font-size: 14px;
+  /* Sets the font size for error messages */
+  margin-top: 5px;
+  /* Adds margin above error messages */
+}
+
+.book button[type="submit"] {
+  padding: 12px 20px;
+  /* Adds padding around the submit button */
+  margin-top: 10px;
+  /* Adds margin above the submit button */
+  background-color: #007bff;
+  /* Sets the background color of the submit button */
+  color: #fff;
+  /* Sets the text color of the submit button */
+  border: none;
+  /* Removes the default border */
+  border-radius: 5px;
+  /* Rounds the corners of the submit button */
+  cursor: pointer;
+  /* Changes the cursor to a pointer when hovering */
+  transition: background-color 0.3s ease;
+  /* Adds a transition for background color */
+}
+
+.book button[type="submit"]:hover {
+  background-color: #0056b3;
+  /* Changes the background color on hover */
+}
+
+.book p {
+  margin-top: 10px;
+  /* Adds margin above paragraph elements */
+  font-size: 16px;
+  /* Sets the font size for paragraph elements */
+  color: #28a745;
+  /* Sets the text color to a green shade */
 }

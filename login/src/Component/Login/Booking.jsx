@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Booking from "./Booking.css"
-import DoctorComponent from "./Doctor";
+import "./Booking.css";
+import "./Doctor.jsx";
+import { useAuth } from "./Securirty/AuthContext";
 
-export default function BookingComponent({onBookingMade}) {
+export default function BookingComponent({ onBookingMade }) {
+  // State variables for form data, errors, response message, and more.
   const [formData, setFormData] = useState({
-    // user_id: "",
+    // Initializing form data with default values
     doctor_id: "",
+    patient_id: "",
     patient_name: "",
     age: 0,
     contact: 0,
@@ -15,104 +18,76 @@ export default function BookingComponent({onBookingMade}) {
     booking_type: "",
     payment_mode: "",
   });
+
+  // Variables to handle response message, errors, doctor list, and other states.
   const [responseMessage, setResponseMessage] = useState("");
   const [errors, setErrors] = useState("");
   const [doctorList, setDoctorList] = useState([]);
-  const [bookingRefresh, setBookingRefresh] = useState(false);
-  const [bookedTimeslots, setBookedTimeslots] = useState([]);
-  const navigate = useNavigate();
 
+  // Navigation and authentication context.
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const userId = user ? user.user_id : "";
+
+  // Fetch list of doctors when component mounts.
   useEffect(() => {
     fetchDoctorList();
   }, []);
 
+  // Function to fetch the list of doctors from the server.
   const fetchDoctorList = async () => {
     try {
       const response = await fetch("http://localhost:8080/doctorlist");
       const data = await response.json();
-      console.log(data);
-      console.log("data success");
+      console.log(data); // Logging the data received from the server.
+      console.log("Data fetched successfully");
 
-      
+      // Setting the doctor list state with the received data.
       setDoctorList(data);
     } catch (error) {
-      console.error("Error fetching doctor list: ", error);
+      console.error("Error fetching doctor list: ", error); // Logging any error occurred during the fetch.
     }
   };
 
-  //Funtion to get current time in HH:MM format
+  // Function to get the current time in HH:MM format.
   const getCurrentTime = () => {
     const now = new Date();
     const selectedDate = new Date(formData.booking_date);
 
-    //Check if selected date is of today or in future
-    if(
-      selectedDate.toDateString() === now.toDateString() 
-    ){
-    const totalMinutes = now.getHours()*60 + now.getMinutes();
-    const minutes = (totalMinutes%(24*60)) %60;
-    const hours = Math.floor(totalMinutes/60)%24;
-    return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
-  } else{
-    //If selected date is in the future, return empty String it will not disable the time
-    return"";
-  }
-};
-//hi
-//welcome
+    // Check if selected date is today or in the future.
+    if (selectedDate.toDateString() === now.toDateString()) {
+      const totalMinutes = now.getHours() * 60 + now.getMinutes();
+      const minutes = (totalMinutes % (24 * 60)) % 60;
+      const hours = Math.floor(totalMinutes / 60) % 24;
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     fetchBookedTimeslotsForToday();
-  //   });
-  //   return () => clearInterval(interval);
-  // }, []);
+      // Returning current time in HH:MM format.
+      return `${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}`;
+    } else {
+      // If selected date is in the future, return empty string to not disable the time.
+      return "";
+    }
+  };
 
-  // useEffect(() => {
-  //   if(formData.booking_date) {
-  //     fetchBookedTimeslotsForDate(formData.booking_date);
-  //   }
-  // },[formData.booking_date]);
-
-  // const fetchBookedTimeslotsForToday = async () => {
-  //   const today = new Date().toISOString().split("T")[0];
-  //   fetchBookedTimeslotsForDate(today);
-  // };
-
-  // const fetchBookedTimeslotsForDate = async () => {
-  //   try{
-  //     const response = await fetch("http://localhost:8080/booking");
-  //     const bData = await response.json();
-  //     console.log(bData);
-      
-  //   }catch(error){
-  //     console.error("Error fetching booked timeslots: ", error);
-  //   }
-  // }
-
+  // Function to validate the form data before submission.
   const validateForm = () => {
     let valid = true;
     const errors = {};
 
-    // // Validate user_id
-    // if (!formData.user_id.trim()) {
-    //   errors.user_id = "Username is required";
-    //   valid = false;
-    // }
-
-    // Validate name
+    // Validate patient's name.
     if (!formData.patient_name.trim()) {
       errors.patient_name = "Name is required";
       valid = false;
     }
 
-    // Validate age
+    // Validate age.
     if (!formData.age.trim()) {
       errors.age = "Age is required";
       valid = false;
     }
 
-    // Validate contact
+    // Validate contact number.
     if (!formData.contact) {
       errors.contact = "Contact number is required";
       valid = false;
@@ -121,70 +96,70 @@ export default function BookingComponent({onBookingMade}) {
       valid = false;
     }
 
-    //Validate date
+    // Validate booking date.
     if (!formData.booking_date.trim()) {
       errors.booking_date = "Date is required";
       valid = false;
     }
 
-    //Validate time
+    // Validate booking time.
     if (!formData.booking_time.trim()) {
       errors.booking_time = "Time is required";
       valid = false;
     }
 
-    //Validate doctor
+    // Validate doctor's ID.
     if (!formData.doctor_id.trim()) {
       errors.doctor_id = "Doctor is required";
       valid = false;
     }
 
-    //Validate time
+    // Validate booking type.
     if (!formData.booking_type.trim()) {
       errors.booking_type = "Booking type is required";
       valid = false;
     }
 
-    //Validate payment
+    // Validate payment mode.
     if (!formData.payment_mode.trim()) {
       errors.payment_mode = "Payment mode is required";
       valid = false;
     }
 
+    // Set the errors state with any validation errors found.
     setErrors(errors);
-    return valid;
+    return valid; // Return whether the form data is valid.
   };
 
+  // Function to handle the form submission.
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent form from submitting the default way.
+
+    // If the form data is valid, proceed with form submission.
     if (validateForm()) {
       try {
-
-         
-
-
-        
-
+        // Make a POST request to the server with the form data.
         const response = await fetch("http://localhost:8080/Patientbooking", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify({ ...formData, patient_id: userId }), // Include user ID in the form data.
         });
+
         const data = await response.json();
+
+        // If the response is successful, set the response message and navigate to the booking success page.
         if (response.ok) {
           setResponseMessage(data.response);
           navigate("/bookingsuccess", { state: { responseMessage: data } });
         } else {
+          // If there is an error in the response, throw an error.
           throw new Error(data.response);
-          // console.log(data);
-          // // navigate("/success");
-          // setResponseMessage(data.response);
         }
       } catch (error) {
         console.error("Error:", error);
-        alert("Booking Failed: " + error.response);
+        alert("Booking Failed: " + error.response); // Display alert with the error message.
       }
     }
   };
@@ -192,6 +167,7 @@ export default function BookingComponent({onBookingMade}) {
   return (
     <div className="book">
       <form onSubmit={handleSubmit}>
+        {/* Input for patient's name */}
         <div className="fPname">
           <label>Patient Name</label>
           <input
@@ -206,6 +182,7 @@ export default function BookingComponent({onBookingMade}) {
           )}
         </div>
 
+        {/* Input for patient's age */}
         <div className="fAge">
           <label>Age</label>
           <select
@@ -214,21 +191,17 @@ export default function BookingComponent({onBookingMade}) {
             onChange={(e) => setFormData({ ...formData, age: e.target.value })}
           >
             <option value="">Select</option>
-            {[...Array(201)].map(
-              (
-                _,
-                index // Generating options from 0 to 9
-              ) => (
-                <option key={index} value={index}>
-                  {index}
-                </option>
-              )
-            )}
+            {[...Array(201)].map((_, index) => (
+              <option key={index} value={index}>
+                {index}
+              </option>
+            ))}
           </select>
           {formData.age && <p>Selected Age: {formData.age}</p>}
           {errors.age && <div className="error">{errors.age}</div>}
         </div>
 
+        {/* Input for contact number */}
         <div className="fContact">
           <label>Contact</label>
           <input
@@ -241,12 +214,13 @@ export default function BookingComponent({onBookingMade}) {
           {errors.contact && <div className="error">{errors.contact}</div>}
         </div>
 
+        {/* Input for booking date */}
         <div className="fBookingDate">
           <label>Booking Date</label>
           <input
             type="date"
             value={formData.booking_date}
-            min={new Date().toISOString().split("T")[0]} // Disable Past Dates
+            min={new Date().toISOString().split("T")[0]} // Disable past dates.
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -261,29 +235,26 @@ export default function BookingComponent({onBookingMade}) {
           )}
         </div>
 
+        {/* Input for booking time */}
         <div className="fBookingTime">
           <label>Booking Time</label>
           <input
             type="time"
             value={formData.booking_time}
-            min={getCurrentTime()}
+            min={getCurrentTime()} // Set minimum time to current time if date is today.
             onChange={(e) =>
               setFormData({
                 ...formData,
                 booking_time: e.target.value,
               })
             }
-      //  disabled={bookedTimeslots.some(
-//     (booking) =>
-//       booking.booking_time === formData.booking_time
-// )}
-
           />
           {errors.booking_time && (
             <div className="error">{errors.booking_time}</div>
           )}
         </div>
 
+        {/* Dropdown to select a doctor */}
         <div className="fDoctor">
           <label>Select a doctor</label>
           <select
@@ -300,12 +271,12 @@ export default function BookingComponent({onBookingMade}) {
               </option>
             ))}
           </select>
-          
-          {errors.doctor_id && <div className="errors">{errors.doctor_id}</div>}
+          {errors.doctor_id && <div className="error">{errors.doctor_id}</div>}
         </div>
 
+        {/* Dropdown to select booking type */}
         <div className="fBookingType">
-          <label>Booking Type: </label>
+          <label>Booking Type:</label>
           <select
             value={formData.booking_type}
             onChange={(e) =>
@@ -324,6 +295,7 @@ export default function BookingComponent({onBookingMade}) {
           )}
         </div>
 
+        {/* Radio buttons for payment mode */}
         <div className="payment">
           <h4>Payment Mode</h4>
           <input
@@ -340,10 +312,13 @@ export default function BookingComponent({onBookingMade}) {
           )}
         </div>
 
+        {/* Submit button */}
         <div>
           <button type="submit">Book</button>
         </div>
-        </form>
+      </form>
+
+      {/* Display response message */}
       {responseMessage && <p>{responseMessage}</p>}
     </div>
   );

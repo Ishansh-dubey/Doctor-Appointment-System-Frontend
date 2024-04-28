@@ -1,0 +1,289 @@
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* Ensures consistent box sizing across elements */
+}
+
+/* Apply styles to the body */
+body {
+  font-family: Arial, sans-serif;
+  /* Sets the font family for the whole page */
+  background-color: #f2f2f2;
+  /* Sets a light gray background color for the body */
+}
+
+/* Style the container */
+.home-container {
+  max-width: 1200px;
+  /* Sets maximum width for the container */
+  margin: 0 auto;
+  /* Centers the container horizontally */
+  padding: 20px;
+  /* Adds padding inside the container */
+}
+
+/* Style the banner */
+.banner {
+  text-align: center;
+  /* Centers text inside the banner */
+  margin-bottom: 40px;
+  /* Adds space below the banner */
+}
+
+.banner h1 {
+  font-size: 42px;
+  /* Sets the font size of the banner's main heading */
+  color: #333;
+  /* Sets the text color */
+  margin-bottom: 10px;
+  /* Adds space below the main heading */
+}
+
+.banner p {
+  font-size: 20px;
+  /* Sets the font size of the banner's subheading */
+  color: #666;
+  /* Sets the text color */
+}
+
+/* Style section headings */
+.about-section h2,
+.booking-section h2,
+.doctor-section h2,
+.caution-section h2,
+.signup-process h2 {
+  font-size: 28px;
+  /* Sets the font size for section headings */
+  color: #333;
+  /* Sets the text color */
+  margin-bottom: 20px;
+  /* Adds space below section headings */
+}
+
+/* Style section content */
+about-section p,
+booking-section p,
+doctor-section p,
+caution-section p,
+signup-process p {
+  font-size: 18px;
+  /* Sets the font size for section content */
+  color: #666;
+  /* Sets the text color */
+  line-height: 1.6;
+  /* Adjusts the line height for better readability */
+}
+
+/* Style the signup process */
+.signup-process {
+  background-color: #fff;
+  /* Sets the background color to white */
+  padding: 30px;
+  /* Adds padding inside the container */
+  border-radius: 10px;
+  /* Rounds the corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* Adds a subtle shadow effect */
+  margin-bottom: 40px;
+  /* Adds space below the signup process section */
+}
+
+.signup-process .step {
+  margin-bottom: 25px;
+  /* Adds space below each signup step */
+}
+
+.signup-process h4 {
+  font-size: 24px;
+  /* Sets the font size for section headings */
+  color: #333;
+  /* Sets the text color */
+  margin-bottom: 15px;
+  /* Adds space below section headings */
+}
+
+.signup-process p {
+  font-size: 18px;
+  /* Sets the font size for section content */
+  color: #666;
+  /* Sets the text color */
+}
+
+/* Style the buttons */
+.booking-section .btn,
+.doctor-info .btn {
+  display: inline-block;
+  /* Makes buttons inline blocks */
+  background-color: #007bff;
+  /* Sets button background color */
+  color: #fff;
+  /* Sets button text color */
+  padding: 12px 24px;
+  /* Adds padding inside the button */
+  border-radius: 5px;
+  /* Rounds the corners of the button */
+  text-decoration: none;
+  /* Removes underline from button text */
+  transition: background-color 0.3s ease;
+  /* Adds a transition effect on hover */
+}
+
+.booking-section .btn:hover,
+.doctor-info .btn:hover {
+  background-color: #0056b3;
+  /* Changes button background color on hover */
+}
+
+/* Style lists in the booking section */
+booking-section ol,
+booking-section ul {
+  list-style-type: none;
+  /* Removes list style */
+  margin: 0;
+  padding: 0;
+}
+
+booking-section li {
+  margin-bottom: 10px;
+  /* Adds space below each list item */
+}
+
+booking-section li:before {
+  content: "\2022";
+  /* Unicode bullet point */
+  color: #666;
+  /* Sets the bullet point color */
+  font-weight: bold;
+  /* Makes the bullet point bold */
+  display: inline-block;
+  /* Ensures the bullet point is an inline block */
+  width: 1em;
+  /* Sets the bullet point width */
+  margin-left: -1em;
+  /* Adjusts the bullet point's horizontal alignment */
+}
+
+/* Style the doctor section */
+.doctor-card {
+  display: flex;
+  /* Uses flexbox layout */
+  align-items: center;
+  /* Vertically centers the content */
+}
+
+.doctor-card img {
+  max-width: 300px;
+  /* Sets maximum width for the image */
+  margin-right: 40px;
+  /* Adds space to the right of the image */
+  border-radius: 5px;
+  /* Rounds the corners of the image */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* Adds a subtle shadow effect */
+}
+
+.doctor-info h3 {
+  font-size: 24px;
+  /* Sets the font size for section headings */
+  color: #333;
+  /* Sets the text color */
+  margin-bottom: 15px;
+  /* Adds space below section headings */
+}
+
+.doctor-info p {
+  font-size: 18px;
+  /* Sets the font size for section content */
+  color: #666;
+  /* Sets the text color */
+  line-height: 1.6;
+  /* Adjusts the line height for better readability */
+}
+
+.doctor-info ul {
+  list-style-type: none;
+  /* Removes list style */
+  margin: 0;
+  padding: 0;
+}
+
+.doctor-info li {
+  margin-bottom: 15px;
+  /* Adds space below each list item */
+}
+
+.doctor-info li:before {
+  content: "\2022";
+  /* Unicode bullet point */
+  color: #666;
+  /* Sets the bullet point color */
+  font-weight: bold;
+  /* Makes the bullet point bold */
+  display: inline-block;
+  /* Ensures the bullet point is an inline block */
+  width: 1em;
+  /* Sets the bullet point width */
+  margin-left: -1em;
+  /* Adjusts the bullet point's horizontal alignment */
+}
+
+/* Style the caution section */
+.caution-section {
+  background-color: #fff;
+  /* Sets the background color to white */
+  padding: 30px;
+  /* Adds padding inside the container */
+  border-radius: 10px;
+  /* Rounds the corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* Adds a subtle shadow effect */
+  margin-bottom: 40px;
+  /* Adds space below the caution section */
+}
+
+.caution-section h2 {
+  font-size: 28px;
+  /* Sets the font size for section headings */
+  color: #333;
+  /* Sets the text color */
+  margin-bottom: 20px;
+  /* Adds space below section headings */
+}
+
+.caution-section p {
+  font-size: 18px;
+  /* Sets the font size for section content */
+  color: #666;
+  /* Sets the text color */
+  line-height: 1.6;
+  /* Adjusts the line height for better readability */
+}
+
+.caution-section ul {
+  list-style-type: none;
+  /* Removes list style */
+  margin: 0;
+  padding: 0;
+}
+
+.caution-section li {
+  margin-bottom: 15px;
+  /* Adds space below each list item */
+}
+
+.caution-section li:before {
+  content: "\2022";
+  /* Unicode bullet point */
+  color: #666;
+  /* Sets the bullet point color */
+  font-weight: bold;
+  /* Makes the bullet point bold */
+  display: inline-block;
+  /* Ensures the bullet point is an inline block */
+  width: 1em;
+  /* Sets the bullet point width */
+  margin-left: -1em;
+  /* Adjusts the bullet point's horizontal alignment */
+}

@@ -1,0 +1,45 @@
+/* Styles for the header */
+.header {
+  list-style-type: none;
+  /* Remove default list style */
+  margin: 0;
+  /* Remove default margin */
+  padding: 0;
+  /* Remove default padding */
+  overflow: hidden;
+  /* Hide overflow */
+  background-color: #333;
+  /* Set background color to dark gray */
+}
+
+/* Styles for list items */
+li {
+  float: left;
+  /* Align list items horizontally */
+}
+
+/* Styles for anchor links within list items */
+li a {
+  display: block;
+  /* Display links as block elements */
+  color: white;
+  /* Set text color to white */
+  text-align: center;
+  /* Center-align text */
+  padding: 14px 16px;
+  /* Add padding for spacing */
+  text-decoration: none;
+  /* Remove underline from text */
+}
+
+/* Hover effect for non-active links */
+li a:hover:not(.active) {
+  background-color: #111;
+  /* Set background color on hover */
+}
+
+/* Styles for active links */
+.active {
+  background-color: #04aa6d;
+  /* Set background color for active links */
+}

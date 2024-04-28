@@ -1,5 +1,5 @@
 import { useState } from "react";
-import signup from "./signup.css";
+import "./signup.css";
 import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
@@ -126,8 +126,19 @@ export default function Signup() {
 
     if (validateForm()) {
       try {
+        //Check if user_id is already present
+        const userIdAvailabilityResponse = await fetch(
+          `http://localhost:8080/checkuserId?user_id=${formData.user_id}`
+        );
+        const userIdAvailabilityData = await userIdAvailabilityResponse.json();
+
+        if (!userIdAvailabilityData.available) {
+          setErrors({ user_id: "This user id is already taken" });
+          return;
+        }
         console.log(formData);
 
+        //Proceed with signing up if user id is available
         const response = await fetch("http://localhost:8080/signupdata", {
           method: "POST",
           headers: {
@@ -172,7 +183,7 @@ export default function Signup() {
       <form onSubmit={handleSubmit}>
         {/* Name */}
         <div className="fName">
-          <label>Name</label>
+          <label>Name*</label>
           <input
             type="text"
             value={formData.name}
@@ -182,7 +193,7 @@ export default function Signup() {
         </div>
 
         <div className="fEmail">
-          <label>Email</label>
+          <label>Email*</label>
           <input
             type="email"
             value={formData.email_id}
@@ -194,7 +205,7 @@ export default function Signup() {
         </div>
 
         <div className="fUserId">
-          <label>Username</label>
+          <label>Username*</label>
           <input
             type="text"
             value={formData.user_id}
@@ -206,7 +217,7 @@ export default function Signup() {
         </div>
 
         <div className="fDob">
-          <label>Date of Birth</label>
+          <label>Date of Birth*</label>
           <input
             type="date"
             value={formData.date_of_birth}
@@ -225,7 +236,7 @@ export default function Signup() {
         </div>
 
         <div className="fContact">
-          <label>contact</label>
+          <label>contact*</label>
           <input
             type="text"
             value={formData.contact}
@@ -237,7 +248,7 @@ export default function Signup() {
         </div>
 
         <div className="fOtherContact">
-          <label>Other Contact</label>
+          <label>Other Contact*</label>
           <input
             type="text"
             value={formData.other_contact}
@@ -254,7 +265,7 @@ export default function Signup() {
         </div>
 
         <div className="fAddress">
-          <label>Address</label>
+          <label>Address*</label>
           <input
             type="text"
             value={formData.address}
@@ -266,7 +277,15 @@ export default function Signup() {
         </div>
 
         <div className="fRole">
-          <h4>Role</h4>
+          <h4>Role*</h4>
+          <input
+            type="radio"
+            value="Patient"
+            checked={formData.role === "Patient"}
+            onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+          />
+          <label>Patient</label>
+          {errors.role && <div className="error">{errors.role}</div>}
           <input
             type="radio"
             value="Doctor"
@@ -277,7 +296,7 @@ export default function Signup() {
           {formData.role === "Doctor" && (
             <div>
               <div className="fSpecification">
-                <label>Specification</label>
+                <label>Specification*</label>
                 <input
                   type="text"
                   value={formData.specification}
@@ -291,7 +310,7 @@ export default function Signup() {
               </div>
 
               <div className="fDoctor_id">
-                <label>Doctor Id</label>
+                <label>Doctor Id*</label>
                 <input
                   type="text"
                   value={formData.doctor_id}
@@ -305,7 +324,7 @@ export default function Signup() {
               </div>
 
               <div className="fHospitalAddress">
-                <label>Hospital Address</label>
+                <label>Hospital Address*</label>
                 <input
                   type="text"
                   value={formData.hospital_address}
@@ -322,7 +341,7 @@ export default function Signup() {
               </div>
 
               <div className="fOfficialContact">
-                <label>Official Contact</label>
+                <label>Official Contact*</label>
                 <input
                   type="text"
                   value={formData.official_contact}
@@ -339,7 +358,7 @@ export default function Signup() {
               </div>
 
               <div className="fOfficialEmail">
-                <label>Official Email</label>
+                <label>Official Email*</label>
                 <input
                   type="text"
                   value={formData.official_email_id}
@@ -356,18 +375,10 @@ export default function Signup() {
               </div>
             </div>
           )}
-          <input
-            type="radio"
-            value="Patient"
-            checked={formData.role === "Patient"}
-            onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-          />
-          <label>Patient</label>
-          {errors.role && <div className="error">{errors.role}</div>}
         </div>
 
         <div className="fPassword">
-          <label>Password</label>
+          <label>Password*</label>
           <input
             type="password"
             value={formData.password}
